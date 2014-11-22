@@ -19,10 +19,12 @@ int main () {
 
 	std::forward_list<unsigned>&& l1 (InsertWithEmplace());
 
-	std::forward_list<unsigned>&& l2 (InsertWithEmplace());
+	std::forward_list<unsigned> l2 (10000000);
 
-	auto printout = [&](bool first) -> void {
-		for(auto & number : (first)? l1 : l2){
+	std::iota(l2.begin(),l2.end(),1);
+
+	auto printout = [&](const auto & container) -> void {
+		for(auto & number : container){
 				cout << number << " ";
 			}
 		cout << endl;
@@ -31,29 +33,30 @@ int main () {
 	l1.remove_if([](int n) {return n > 10;});
 	l2.remove_if([](int n) {return n > 5;});
 	cout << "l1 after removing elements greater than 10: ";
-	printout(true);
+	printout(l1);
 	cout << "l2 after removing elements greater than 5: ";
-		printout(false);
+		printout(l2);
 	cout << "l2 after splice_after call: ";
 	l2.splice_after(l2.before_begin(),l1);
-		printout(false);
+		printout(l2);
 		cout << "l1 after splice_after call: ";
-		printout(true);
+		printout(l1);
 	l2.unique();
 	cout << "l2 after unique call on a unsorted linked list:";
-	printout(false);
+	printout(l2);
 
 	cout << "l2 after sorted call: ";
 	l2.sort();
-	printout(false);l2.unique();
+	printout(l2);
+	l2.unique();
 	cout << "l2 after unique call on a sorted linked list:";
-	printout(false);
+	printout(l2);
 	cout << "l1 after swap call: ";
 	std::swap(l1,l2);
-	printout(true);
+	printout(l1);
 	cout << "l1 after reverse call:";
 	l1.reverse();
-		printout(true);
+		printout(l1);
 	cout << "Linked List functions Complete" << endl;
 
 	cout << "Now implementing Priority Queues Exercising the following member functions:\nemplace()\ntop()\npop()" << endl;
@@ -76,22 +79,17 @@ int main () {
 	cout << endl;
 
 	cout << "Printing Deque values" << endl;
-	auto print_deque = [&] () -> void {
-	for(auto & val : deque_tmp){
-		cout << val << " ";
-	}
-	};
-	print_deque();
+	printout(deque_tmp);
 	cout<<endl;
 	std::mt19937 g;
 	cout << "Shuffling the deque using std::shuffle()" << endl;
 	std::shuffle(deque_tmp.begin(), deque_tmp.end(),g);
-	print_deque();
+	printout(deque_tmp);
 	cout << endl;
 
 	cout << "Converting the deque into a heap using std::make_heap()" << endl;
 	std::make_heap(deque_tmp.begin(),deque_tmp.end());
-	print_deque();
+	printout(deque_tmp);
 
 	cout << "Now looking at the new unordered_set container" << endl;
 

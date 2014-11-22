@@ -26,19 +26,25 @@ public class GuessingGame {
 			Scanner input = new Scanner(System.in);
 			numberofTries++;
 		
-			guess = input.nextInt();
-		
-			if (guess == randomNumber){
-				wrongGuess = true;
-			
-			}
-			else if (guess < randomNumber){
-				System.out.println("Guess is too Low");
-		
-			}
-			else 
-				System.out.println("Guess is too High");
+			wrongGuess = processUserGuess(randomNumber,input.nextInt());
 		
 		}
+	}
+
+	public static boolean processUserGuess(int randomNumber, int input) {
+		int guess = input;
+		boolean wrongGuess = false;
+
+		if (guess == randomNumber){
+			wrongGuess = true;
+		
+		}
+		else if (guess < randomNumber){
+			System.out.println("Guess is too Low");
+
+		}
+		else 
+			System.out.println("Guess is too High");
+		return wrongGuess;
 	}
 }

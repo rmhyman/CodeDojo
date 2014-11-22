@@ -8,4 +8,8 @@
 #include "mult_of_3_5.h"
 #include "gtest/gtest.h"
 
+TEST(Multiples,foo){
+	EXPECT_EQ(true,true);
+}
+
 

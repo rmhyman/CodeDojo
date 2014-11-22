@@ -34,11 +34,11 @@ USER_DIR = /home/rmhyman/git/CodeDojo/EulerProject/Problem1
 CPPFLAGS += -isystem $(GTEST_DIR)/include -isystem $(GMOCK_DIR)/include
 
 # Flags passed to the C++ compiler.
-CXXFLAGS += -g -Wall -Wextra -pthread
+CXXFLAGS += -g -Wall -Wextra -pthread -std=c++1y
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = multiples_test
+TESTS = multiples_test multiples
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -95,9 +95,15 @@ gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 
 # Builds a sample test.
 
-multiples_test.o : $(GMOCK_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/multiples_test.cpp
+mult_of_3_5.o : mult_of_3_5.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $^
+
+multiples_test.o :  multiples_test.cpp 
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $^
 
 multiples_test : multiples_test.o gmock_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+	
+multiples : mult_of_3_5.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@
      
